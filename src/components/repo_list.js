@@ -19,9 +19,11 @@ class RepoList extends Component {
   }
 
   render() {
+    const reposFiltered = this.props.repos.filter(repo => repo.name.indexOf(this.props.repoName) > -1);
+    
     return (
       <div className="repo-list">
-        {this.props.repos.map(this.renderRepo)}
+        {reposFiltered.map(this.renderRepo)}
       </div>
     );
   }
