@@ -40,6 +40,10 @@ class RepoList extends Component {
 
     const reposFiltered = repos.filter(repo => repo.name.indexOf(repoName) > -1);
     
+    if(reposFiltered.length === 1) {
+      return null;
+    }
+ 
     return (
       <ul className="repo-list list-group">
         {reposFiltered.map(this.renderRepo)}
