@@ -20,6 +20,7 @@ class RepoList extends Component {
          key={repo.id} 
          onClick={this.handleClick.bind(this, repo)} >
         <h4>{repo.name}</h4>
+        <p>Repo id: {repo.id}</p>
         <p>{repo.description}</p>        
         <p><strong>Author:</strong> {repo.owner.login}</p>
       </li>
@@ -32,18 +33,24 @@ class RepoList extends Component {
   }
 
   render() {
-    if(!this.props.repoName) {
+    if(!this.props.activeRepo.name) {
       return null;
     }
 
-    const { repos, repoName }  = this.props;
+    const { repos, activeRepo }  = this.props;
 
-    const reposFiltered = repos.filter(repo => repo.name.indexOf(repoName) > -1);
-    
+    const reposFiltered = repos.filter(repo => { 
+      if(activeRepo.id) {
+        return repo.name.indexOf(activeRepo.name) > -1 && repo.id === activeRepo.id;
+      }
+      return repo.name.indexOf(activeRepo.name) > -1;
+    });
+
+
     if(reposFiltered.length === 1) {
       return null;
-    }
- 
+    } 
+
     return (
       <ul className="repo-list list-group">
         {reposFiltered.map(this.renderRepo)}
