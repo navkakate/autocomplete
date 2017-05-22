@@ -3,28 +3,49 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 
 class RepoList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeRepo: {},
+      clearList: false 
+    }
+  }
+
   componentWillMount() {
     this.props.fetchRepos();
   }
 
-  renderRepo(repo) {
+  renderRepo = (repo) => {
     return (
-      <div className="card card-block" key={repo.id}>
-        <h4 className="card-title">{repo.name}</h4>
-        <p className="card-text">{repo.description}</p>        
-        <p className="card-text">{repo.owner.login}</p>
-        <a className="btn btn-primary" href={repo.url}>Go to Repo</a>
-      </div>
+      <li className="list-group-item list-group-item-action" 
+         key={repo.id} 
+         onClick={this.handleClick.bind(this, repo)} >
+        <h4>{repo.name}</h4>
+        <p>{repo.description}</p>        
+        <p><strong>Author:</strong> {repo.owner.login}</p>
+      </li>
     );
   }
 
+  handleClick(activeRepo) {
+    this.setState({activeRepo});
+    this.props.onActiveRepoSelect(activeRepo.name);
+    this.setState({clearList: true});
+  }
+
   render() {
-    const reposFiltered = this.props.repos.filter(repo => repo.name.indexOf(this.props.repoName) > -1);
+    if(!this.props.repoName || this.state.clearList) {
+      return null;
+    }
+
+    const { repos, repoName }  = this.props;
+
+    const reposFiltered = repos.filter(repo => repo.name.indexOf(repoName) > -1);
     
     return (
-      <div className="repo-list">
+      <ul className="repo-list list-group">
         {reposFiltered.map(this.renderRepo)}
-      </div>
+      </ul>
     );
   }
 }

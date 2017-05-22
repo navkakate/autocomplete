@@ -7,15 +7,16 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchString: ''
+      searchString: '',
+      activeRepoName: ''
     };
   }
 
   render() {
     return (
       <div>
-        <AutoComplete onSearchStiringChange={searchString => this.setState({searchString})} />
-        <RepoList repoName={this.state.searchString} />
+        <AutoComplete searchString={this.state.activeRepoName} onSearchStringChange={searchString => this.setState({searchString})} />
+        <RepoList repoName={this.state.searchString} onActiveRepoSelect={activeRepoName => this.setState({activeRepoName})} />
       </div>
     );
   }
