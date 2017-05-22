@@ -29,7 +29,8 @@ class RepoList extends Component {
 
   handleClick(activeRepo) {
     this.setState({activeRepo});
-    this.props.onActiveRepoSelect(activeRepo.name);
+    this.props.onActiveRepoSelect(activeRepo);
+    console.log(activeRepo);
     this.setState({clearList: true});
   }
 

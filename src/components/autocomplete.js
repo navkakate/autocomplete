@@ -5,9 +5,6 @@ import * as actions from '../actions';
 class AutoComplete extends Component {
   constructor(props) {
       super(props);
-      this.state = { 
-          searchString: ''
-        };
   }
 
   render() {
@@ -16,14 +13,13 @@ class AutoComplete extends Component {
       <input type="text" 
              className="form-control" 
              placeholder="Search for..."
-             value={this.props.searchString ? this.props.searchString : this.state.searchString }
+             value={ this.props.searchString }
              onChange={event => this.onInputChange(event.target.value)} />
     </div>
     );
   }
 
   onInputChange(searchString) {
-      this.setState({searchString});
       this.props.onSearchStringChange(searchString);
   }
 }

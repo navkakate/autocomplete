@@ -8,15 +8,17 @@ export default class App extends Component {
     super(props);
     this.state = {
       searchString: '',
-      activeRepoName: ''
+      activeRepo: ''
     };
   }
 
   render() {
     return (
       <div>
-        <AutoComplete searchString={this.state.activeRepoName} onSearchStringChange={searchString => this.setState({searchString})} />
-        <RepoList repoName={this.state.searchString} onActiveRepoSelect={activeRepoName => this.setState({activeRepoName})} />
+        <AutoComplete  searchString={this.state.searchString}
+                       onSearchStringChange={searchString => this.setState({searchString})} />
+        <RepoList repoName={this.state.searchString} 
+                  onActiveRepoSelect={activeRepo => this.setState({searchString: activeRepo.name})} />
       </div>
     );
   }
